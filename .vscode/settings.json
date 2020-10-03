@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "geopy",
+        "plotly",
+        "pyplot",
+        "tqdm"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}
