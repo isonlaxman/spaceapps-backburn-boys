@@ -24,7 +24,7 @@
 				padding: 5px 50px 10px 50px;
 				background-color: rgb(50, 173, 255);
 				box-shadow: 1px 1px 1px 1px  rgb(50, 173, 255);
-        opacity: 1;
+        fill-opacity: 0.5;
 			}
 
 			img.displayed {
@@ -83,7 +83,7 @@
 			var projection = d3.geo.mercator()
 								   .center([ 132, -28 ])
 								   .translate([ w/2, h/2 ])
-								   .scale(1000);
+								   .scale(800);
 
 
 			//Define path generator
