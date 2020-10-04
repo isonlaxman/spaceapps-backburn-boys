@@ -4,13 +4,7 @@ import pickle
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-
 clf = pickle.load(open('../machine_learning/pickles/binary_extra_trees_2.sav', "rb"))
-
-@app.route("/hello", methods=["GET"]) 
-def hello():
-    return "Hi"
-
 
 @app.route("/getFireConfidence", methods=["GET"])
 def getFireConfidence():
@@ -41,18 +35,4 @@ def getFireConfidence():
     
     return str(result[0]) 
 
-# take in: date 
-# return: all fire confidence on that date from fire_archive
-#           filter if confidence < x
-#           filter if lat-long are too close
-# output: json
-
-# [{
-#     "lat": float,
-#     "long": float,
-#     "confidence": float
-# }]
-
-# import json
-    
 app.run()
