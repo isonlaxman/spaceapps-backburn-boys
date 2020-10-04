@@ -1,0 +1,17 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        146.7562795, -36.2404766
+                    ]
+                },
+                "type": "Feature",
+                "properties": {
+                    "name": "Albury",
+                    "firerisk": 100,
+                    "numfires": 10,
+                    "Date": "xx/xx/xx"
+                }
+            },
