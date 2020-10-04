@@ -1,11 +1,17 @@
 import flask 
 import pickle
+import joblib
+from datetime import datetime
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+clf_classifier = pickle.load(open('src/machine_learning/pickles/binary_extra_trees_2.sav', "rb"))
+scaler_classifier = joblib.load("src/machine_learning/pickles/binary_extra_trees_scaler.sav")
 
-clf = pickle.load(open('../machine_learning/pickles/binary_extra_trees_2.sav', "rb"))
+clf_reg = pickle.load(open('src/machine_learning/pickles/gradient_regressor.sav', "rb"))
+scaler_reg = joblib.load("src/machine_learning/pickles/gradient_regressor_scaler.sav")
+
 
 @app.route("/hello", methods=["GET"]) 
 def hello():
@@ -21,7 +27,9 @@ def getFireConfidence():
     Pressure = None
     lat = None
     lon = None
+    regress = None
     
+    # classifier arguments
     if "AvgTemp" in flask.request.args:
         AvgTemp = float(flask.request.args["AvgTemp"])
     if "Rainfall" in flask.request.args:
@@ -36,23 +44,31 @@ def getFireConfidence():
         lat = float(flask.request.args["lat"])
     if 'long' in flask.request.args:
         lon = float(flask.request.args["long"])
+    if 'regress' in flask.request.args:
+        regress = float(flask.request.args["regress"])
 
-    result = clf.predict([[AvgTemp, Rainfall, Windspeed, Humidity, Pressure, lat, lon]])
-    
-    return str(result[0]) 
+    classifier_input = np.array([[AvgTemp, Rainfall, Windspeed, Humidity, Pressure, lat, lon]])
+    classifier_input = scaler_classifier.transform(classifier_input)
+    classifier_result = clf_classifier.predict(classifier_input)
 
-# take in: date 
-# return: all fire confidence on that date from fire_archive
-#           filter if confidence < x
-#           filter if lat-long are too close
-# output: json
+    if (regress and classifier_result):
+        brightness = None
+        bright_t31 = None
+        month = None
 
-# [{
-#     "lat": float,
-#     "long": float,
-#     "confidence": float
-# }]
+        if 'brightness' in flask.request.args:
+            brightness = float(flask.request.args["brightness"])
+        if 'bright_t31' in flask.request.args:
+            bright_t31 = float(flask.request.args["bright_t31"])
+        if 'month' in flask.request.args:
+            month = float(flask.request.args["month"])
 
-# import json
+        regressor_input = np.array([[lat, lon, month, brightness, bright_t31]])
+        regressor_input = scaler_reg.transform(regressor_input)
+        regressor_result = clf_reg.predict(regressor_input)
+
+        return str(regressor_result[0])
+
+    return str(classifier_result[0]) 
     
 app.run()
