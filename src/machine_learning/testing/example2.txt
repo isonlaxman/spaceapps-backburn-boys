@@ -1,7 +1,0 @@
-Name,Age,Dummy,Height
-A,4,A,8
-B,5,B,20
-C,0.5,A,1
-D,5,A,30
-E,3,B,8
-F,5,B,10
