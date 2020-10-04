@@ -8,6 +8,8 @@ app.config["DEBUG"] = True
 def hello():
     return "Hi"
 
+# clf = pickle load binary_1
+
 @app.route("/getFireConfidence", methods=["GET"])
 def getFireConfidence():
     AvgTemp = None
@@ -33,7 +35,21 @@ def getFireConfidence():
     if 'long' in flask.request.args:
         lon = float(flask.request.args["long"])
 
-    print(AvgTemp, Rainfall, Windspeed, Humidity, Pressure, lat, lon)
-    return str(AvgTemp)
+    # clf.predict
+    # return 
+
+# take in: date 
+# return: all fire confidence on that date from fire_archive
+#           filter if confidence < x
+#           filter if lat-long are too close
+# output: json
+
+# [{
+#     "lat": float,
+#     "long": float,
+#     "confidence": float
+# }]
+
+# import json
     
 app.run()
