@@ -9,7 +9,7 @@
     <style type="text/css">
         body {
             margin: 0;
-            background-image: url('/Javascript/assets/bg.jpg');
+            background-image: url('/assets/bg.jpg');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             font-family: 'Roboto', sans-serif;
@@ -101,20 +101,40 @@
                 .append("path")
                 .attr("d", path)
                 .attr("stroke", "white")
-                .attr("fill", "grey");
+                .attr("fill", "grey")
+                
+    });
 
 
+        d3.json("firerisk.json", function(error, data) {
 
-            //Append the name
-            svg.append("text")
-                .attr("x", 446)
-                .attr("y", 340)
-                .attr("font-size", 90)
-                .attr("font-weight", "bold")
-                .attr("font-family", "Roboto")
-                .attr("text-anchor", "middle")
-                .attr("opacity", 0.10);
+        // using d3.geo.path() which does all the work for you
+        svg.append("path")
+        .datum(data)
+        .classed("geopath", true)
+        .attr("d", path)
+        .attr("stroke", "white")
+        .attr("fill", "red")
+        .on("mouseover", function(){ //Change colour of mouseover region
+                    d3.select(this)
+                        .style("fill", "orange");
+                        
+                    // Get current event info
+                    console.log(d3.event);
+                    
+                    // Get x & y co-ordinates
+                    console.log(d3.mouse(this));
+                    
+                })
+        .on("mouseout", function(){
+            d3.select(this)
+            .style("fill", "red")
         });
+
+
+        });
+
+
     </script>
 </body>
 

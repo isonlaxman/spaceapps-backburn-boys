@@ -1,0 +1,44 @@
+{
+    "type": "FeatureCollection", 
+    "features": [
+        {
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [
+                    146.7562795, 
+                    -36.2404766
+                ]
+            }, 
+            "type": "Feature", 
+            "properties": {
+                "name": "Albury"
+            }
+        }, 
+        {
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [
+                    150.6212534, 
+                    -33.0872881
+                ]
+            }, 
+            "type": "Feature", 
+            "properties": {
+                "name": "Newcastle"
+            }
+        }, 
+        {
+            "geometry": {
+                "type": "Point", 
+                "coordinates": [
+                    145.6121854, 
+                    -17.0806657
+                ]
+            }, 
+            "type": "Feature", 
+            "properties": {
+                "name": "Cairns"
+            }
+        }
+    ]
+}
