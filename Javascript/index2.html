@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>d3.carto - Simple Map Example</title>
+  <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="d3map.css" />
+</head>
+<style>
+  html,body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-image: url('./assets/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  #map {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+  
+  .country {
+     fill-opacity: 1;
+     fill: #737577;
+     stroke-opacity: 1;
+     stroke: white;
+     stroke-width: 1px;
+  }
+
+  .lowrisk {
+     fill-opacity: 1;
+     fill: #14a800;
+     stroke-opacity: 1;
+     stroke: rgb(255, 115, 0);
+     stroke-width: 2px;
+  }
+  .mediumrisk {
+     fill-opacity: 1;
+     fill: #fbff00;
+     stroke-opacity: 1;
+     stroke: rgb(255, 115, 0);
+     stroke-width: 2px;
+  }
+  .cities {
+     fill-opacity: 1;
+     fill: #fd0000;
+     stroke-opacity: 1;
+     stroke: rgb(255, 255, 255);
+     stroke-width: 2px;
+  }
+  h1 {
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 80px;
+            margin-bottom: 10px;
+            text-align: center;
+    }
+    p {
+            font-size: 16px;
+            margin: 30px 0 10px 0;
+            color: #ffffff;
+            text-align: left;
+    }
+    .markerButton {
+    position: fixed;
+    top: 20px;
+    cursor: pointer;
+    z-index: 99;
+  }
+
+</style>
+<script>
+
+
+function makeSomeMaps() {
+    map = d3.carto.map();
+    d3.select("#map").call(map);
+
+    australiaLayer = d3.carto.layer.geojson(); 
+    australiaLayer.path("aust.json")
+    .label("Australia")
+    .renderMode("canvas")
+    .cssClass("country");
+
+    var colorScale = d3.scale.linear().domain([0,50,100]).range(["green","yellow","red"])
+
+    fireLayer = d3.carto.layer.geojson();
+    fireLayer.path("firerisk.json")
+    .label("Cities")
+    .cssClass("Cities")
+    .renderMode("canvas")
+    .markerSize(8)
+    .markerColor(function(d){return colorScale(d.properties.firerisk)})
+    .x("x")
+    .y("y")
+    .clickableFeatures(true)
+    
+    map.addCartoLayer(australiaLayer)
+        .addCartoLayer(fireLayer)
+    map.centerOn([135,-30],"latlong");
+    map.setScale(4);
+  }
+  d3.json("firerisk.json", function(error, data) {
+    
+    d3.select("body")
+        .selectAll("p")
+        .data(data)
+        .enter()
+        .append("p")
+        .text("Hellooooooooooo");
+
+    });
+
+</script>
+<body onload="makeSomeMaps()">
+    <h1>Australia Fire Risk Rating</h1>
+    <p>The following map shows key fire risk areas over time. The cities included include: </p>
+<div id="map" ></div>
+<div id="x" style="z-index: 1; font-size: 200%; width: 200px; height: 1000px; position: absolute; right: 75px; top: 600px; opacity: 1;"></div>
+<footer>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8" type="text/javascript"></script>
+<script src="d3.carto.map.js" type="text/javascript"></script>
+<script>
+    var img = document.createElement("img");
+     
+    img.src = "./assets/fireriskkey.png";
+    var src = document.getElementById("x");
+     
+    src.appendChild(img);
+    </script>
+</footer>
+</body>
+</html>

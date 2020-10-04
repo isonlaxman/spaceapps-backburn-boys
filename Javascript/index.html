@@ -9,7 +9,7 @@
     <style type="text/css">
         body {
             margin: 0;
-            background-image: url('/assets/bg.jpg');
+            background-image: url('./assets/bg.jpg');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             font-family: 'Roboto', sans-serif;
@@ -90,12 +90,15 @@
             .attr("width", w)
             .attr("height", h);
 
+        var countryG = svg.append("g"),
+            firelayerG = svg.append("g");
+
         //Load in GeoJSON data
         d3.json("aust.json", function(json) {
 
 
             //Bind data and create one path per GeoJSON feature
-            svg.selectAll("path")
+            countryG.selectAll("path")
                 .data(json.features)
                 .enter()
                 .append("path")
@@ -108,16 +111,21 @@
 
         d3.json("firerisk.json", function(error, data) {
 
-        // using d3.geo.path() which does all the work for you
-        svg.append("path")
-        .datum(data)
-        .classed("geopath", true)
-        .attr("d", path)
-        .attr("stroke", "white")
-        .attr("fill", "red")
-        .on("mouseover", function(){ //Change colour of mouseover region
+            // using d3.geo.path() which does all the work for you
+            firelayerG.append("path")
+            .datum(data)
+            .classed("geopath", true)
+            .attr("d", path)
+            .attr("stroke", "white")
+            .attr("fill", "red")
+            .on("mouseover", function(){ //Change colour of mouseover region
                     d3.select(this)
                         .style("fill", "orange");
+                    firelayerG.append("text")
+                    .attr('class','p')
+                    .attr('x', 150)
+                    .attr('y', -25)
+                    .text("Hello");
                         
                     // Get current event info
                     console.log(d3.event);

@@ -11,7 +11,10 @@
             }, 
             "type": "Feature", 
             "properties": {
-                "name": "Albury"
+                "name": "Albury",
+                "firerisk": 100,
+                "numfires" : 10,
+                "Date": "xx/xx/xx"
             }
         }, 
         {
@@ -24,7 +27,8 @@
             }, 
             "type": "Feature", 
             "properties": {
-                "name": "Newcastle"
+                "name": "Newcastle",
+                "firerisk": 60
             }
         }, 
         {
@@ -37,7 +41,8 @@
             }, 
             "type": "Feature", 
             "properties": {
-                "name": "Cairns"
+                "name": "Cairns",
+                "firerisk": 30
             }
         }
     ]
