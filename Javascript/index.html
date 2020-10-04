@@ -9,7 +9,7 @@
     <style type="text/css">
         body {
             margin: 0;
-            background-image: url('/assets/bg.jpg');
+            background-image: url('./assets/bg.jpg');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             font-family: 'Roboto', sans-serif;
@@ -102,39 +102,29 @@
                 .attr("d", path)
                 .attr("stroke", "white")
                 .attr("fill", "grey")
-                
-    });
+
+        });
 
 
         d3.json("firerisk.json", function(error, data) {
 
-        // using d3.geo.path() which does all the work for you
-        svg.append("path")
-        .datum(data)
-        .classed("geopath", true)
-        .attr("d", path)
-        .attr("stroke", "white")
-        .attr("fill", "red")
-        .on("mouseover", function(){ //Change colour of mouseover region
-                    d3.select(this)
-                        .style("fill", "orange");
-                        
-                    // Get current event info
-                    console.log(d3.event);
-                    
-                    // Get x & y co-ordinates
-                    console.log(d3.mouse(this));
-                    
+            console.log(data)
+
+            // using d3.geo.path() which does all the work for you
+            svg.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", function(d) {
+                    console.log(projection(d));
+                    return projection(d)[0];
                 })
-        .on("mouseout", function(){
-            d3.select(this)
-            .style("fill", "red")
+                .attr("cy", function(d) {
+                    return projection(d)[1];
+                })
+                .attr("stroke", "white")
+                .attr("fill", "red");
         });
-
-
-        });
-
-
     </script>
 </body>
 
