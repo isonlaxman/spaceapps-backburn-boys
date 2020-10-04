@@ -4,11 +4,13 @@ import pickle
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+
+clf = pickle.load(open('../machine_learning/pickles/binary_extra_trees_2.sav', "rb"))
+
 @app.route("/hello", methods=["GET"]) 
 def hello():
     return "Hi"
 
-# clf = pickle load binary_1
 
 @app.route("/getFireConfidence", methods=["GET"])
 def getFireConfidence():
@@ -35,8 +37,9 @@ def getFireConfidence():
     if 'long' in flask.request.args:
         lon = float(flask.request.args["long"])
 
-    # clf.predict
-    # return 
+    result = clf.predict([[AvgTemp, Rainfall, Windspeed, Humidity, Pressure, lat, lon]])
+    
+    return str(result[0]) 
 
 # take in: date 
 # return: all fire confidence on that date from fire_archive
